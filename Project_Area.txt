@@ -1,0 +1,8 @@
+I have chosen to work on the OpenStreetMap data for the area of La Rance in the Brittany region in France where I used to spend my summer vacation. The area goes from the city of Dinan at the source of the river La Rance to its month with the port of Saint-Malo on one side and the seaside city of Dinard.
+
+The boundary of the area is defined by the following coordinates:
+minlat="48.4267" minlon="-2.1636" maxlat="48.7277" maxlon="-1.8141"
+
+The cities in this area being rather small town, I decided to a to the scope the seaside town of Saint-Lunaire and the small port of Cancale famous for its oysters.
+
+The OpenStreetMap data for this area have been downloaded manually using the “Overpass API”.

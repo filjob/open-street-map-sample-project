@@ -1,0 +1,56 @@
+cd "C:\Program Files\MongoDB\Server\3.0\bin\"
+
+mongod.exe --dbpath "C:\Users\101003537\Documents\My Developments\Data Analyst\Data Wrangling with MongoDB\Project\data\db"
+
+mongoimport.exe --db map --collection osmData --drop --file "C:\Users\101003537\Documents\My Developments\Data Analyst\Data Wrangling with MongoDB\Project\data\from_Dinan_to_StMalo.json"
+
+mongoimport.exe --db map --collection osmData --drop --file "C:\Users\101003537\Documents\My Developments\Data Analyst\Data Wrangling with MongoDB\Project\data\from_Dinan_to_StMalo.json"
+
+C:\Program Files\MongoDB\Server\3.0\bin>mongoimport.exe --db map --collection os
+mData --drop --file "C:\Users\101003537\Documents\My Developments\Data Analyst\D
+ata Wrangling with MongoDB\Project\data\from_Dinan_to_StMalo.json"
+2015-06-28T22:45:44.647+0200    connected to: localhost
+2015-06-28T22:45:44.648+0200    dropping: map.osmData
+2015-06-28T22:45:47.640+0200    [##......................] map.osmData  27.8 MB/283.1 MB (9.8%)
+2015-06-28T22:45:50.640+0200    [####....................] map.osmData  56.0 MB/283.1 MB (19.8%)
+2015-06-28T22:45:53.640+0200    [#######.................] map.osmData  83.3 MB/283.1 MB (29.4%)
+2015-06-28T22:45:56.640+0200    [#########...............] map.osmData  111.3 MB/283.1 MB (39.3%)
+2015-06-28T22:45:59.640+0200    [###########.............] map.osmData  138.8 MB/283.1 MB (49.0%)
+2015-06-28T22:46:02.639+0200    [##############..........] map.osmData  166.2 MB/283.1 MB (58.7%)
+2015-06-28T22:46:05.647+0200    [################........] map.osmData  194.0 MB/283.1 MB (68.5%)
+2015-06-28T22:46:08.640+0200    [###################.....] map.osmData  226.5 MB/283.1 MB (80.0%)
+2015-06-28T22:46:11.640+0200    [######################..] map.osmData  265.7 MB/283.1 MB (93.9%)
+2015-06-28T22:46:13.114+0200    imported 1265892 documents
+
+mongoimport.exe --db map --collection streetData --drop --file "C:\Users\101003537\Documents\My Developments\Data Analyst\Data Wrangling with MongoDB\Project\data\list_of_Streets.json"
+
+
+
+db.osmData.aggregate([{"$group": {"_id":  {"user": "$created.user", "date": "$created.timestamp"}, "count": {"$sum": 1}}}, {"$sort": {"count": -1}}, {"$limit": 10}])
+
+db.osmData.aggregate([{"$group": {"_id":  {"user": "$created.user", "city": "$address.city"}, "count": {"$sum": 1}}}, {"$sort": {"count": -1}}, {"$limit": 10}])
+
+db.osmData.aggregate([{"$group": {"_id": "$created.timestamp", "count": {"$sum": 1}}}, {"$sort": {"count": -1}}, {"$limit": 10}])
+
+db.osmData.aggregate([{"$match": {"city": {"$exists": 1}}},{"$group": {"_id":  {"city": "$address.city", "user": "$created.user"}, "count": {"$sum": 1}}}, {"$sort": {"count": -1}}, {"$limit": 10}])
+
+db.osmData.aggregate([{"$match": {"address.housenumber": { "$exists": 1}}},{"$group": {"_id": "$basic_elem", "count": { "$sum": 1}}}])
+{ "_id" : "way", "count" : 618 }
+{ "_id" : "node", "count" : 3653 }
+
+db.osmData.aggregate([{"$match": {"address.city": { "$exists": 1}}},{"$group": {"_id": "$basic_elem", "count": { "$sum": 1}}}])
+{ "_id" : "way", "count" : 202 }
+{ "_id" : "node", "count" : 26 }
+
+db.osmData.aggregate([{"$match": {"address.street": { "$exists": 1}}},{"$group": {"_id": "$basic_elem", "count": { "$sum": 1}}}])
+{ "_id" : "way", "count" : 593 }
+{ "_id" : "node", "count" : 716 }
+
+db.osmData.aggregate([{"$match": {"address.housenumber": { "$exists": 1}}},{"$group": {"_id": {"element": "$basic_elem", "city": "$address.city"}, "count": { "$sum": 1}}}])
+
+
+db.osmData.aggregate([{"$match": {"address.city": {"$in": ["Cancale", "Dinan", "Dinard", "Saint-Lunaire", "Saint-Malo"]}}}, {"$group": {"_id":  {"user": "$created.user", "city": "$address.city"}, "count": {"$sum":1}}}, {"$sort": {"count": -1}}, {"$limit": 1}])
+
+db.osmData.aggregate([{"$match": {"address.street": {"$exists": 1}}}, {"$group": {"_id": {"element": "$basic_elem", "city": "$address.city"}, "count": {"$sum": 1}}}, {"$sort": {"city": { "$meta": "textScore" }, posts: -1}} ])
+
+db.osmData.aggregate({"$match": {"address.street": {"$exists": 1}}},{"$group": {"_id": "$basic_elem","count": { "$sum": 1}}})

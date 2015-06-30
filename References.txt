@@ -1,0 +1,3 @@
+http://wiki.openstreetmap.org/wiki/Map_Features - The list of the most common key attributes used in OSM
+http://docs.mongodb.org/manual/reference/operator/aggregation/ - MongoDB aggregation pipeline operators
+http://stackoverflow.com/questions/16607359/mongo-shell-in-windows-7-unicode-text-could-not-be-correctly-displayed - The default character  set  of my MS windows shell terminal does not support Unicode characters resulting in some misleading conclusion on the source of typos in the MongoDB shell output. A Unicode compatible set (lucida) must be chosen
